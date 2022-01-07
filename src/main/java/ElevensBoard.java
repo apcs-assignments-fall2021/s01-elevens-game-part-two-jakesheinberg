@@ -24,7 +24,12 @@ public class ElevensBoard extends Board {
     // returns true if **any** two of the given cards adds up to exactly 11
     // and false otherwise
     public boolean containsPairSum11(ArrayList<Integer> cardIndexes) {
-        // YOUR CODE HERE
+        for(int i=0; i<cardIndexes.size();i++){
+            for(int j = 0; j<cardIndexes.size();j++){
+            if(cardAt(cardIndexes.get(i)).getPointValue()+cardAt(cardIndexes.get(j)).getPointValue()==11){
+                return true;
+            }
+        }}
         return false;
     }
 
@@ -32,7 +37,21 @@ public class ElevensBoard extends Board {
     // returns true if there is at least 1 Jack, at least 1 Queen, and at least 1 King
     // amongst the selected cards, and false otherwise
     public boolean containsJQK(ArrayList<Integer> cardIndexes) {
-        // YOUR CODE HERE
+        int j = 0;
+        int k = 0;
+        int q=0;
+        for(int i=0;i<cardIndexes.size();i++){
+            if(cardAt(cardIndexes.get(i)).getRank()=="jack"){
+                j+=1;
+            }
+            if(cardAt(cardIndexes.get(i)).getRank()=="queen"){
+                q+=1;
+            }
+            if(cardAt(cardIndexes.get(i)).getRank()=="king"){
+                k+=1;
+            }
+        }if(k>0&&q>0&&j>0){
+            return true;}
         return false;
     }
 
@@ -44,9 +63,9 @@ public class ElevensBoard extends Board {
     public boolean anotherPlayIsPossible() {
         // allCards is a list of the indexes of all cards on the board
         ArrayList<Integer> allCards = getAllCardIndexes();
-
-        // YOUR CODE HERE
-        // Just 1-2 lines of code needed
+        if(containsJQK(getAllCardIndexes())==true||containsPairSum11(getAllCardIndexes())==true){
+            return true;
+        }
         return false;
     }
 
@@ -55,7 +74,7 @@ public class ElevensBoard extends Board {
     // (2) a group of three cards consisting of a jack, a queen, and a king in some order
     @Override
     public boolean isLegal(ArrayList<Integer> selectedCards) {
-        // YOUR CODE HERE
-        return false;
-    }
+        return((containsPairSum11(selectedCards)&&selectedCards.size()==2)||(containsJQK(selectedCards)&&selectedCards.size()==3));
+
+        }
 }
